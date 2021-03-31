@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,3 +23,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('register', [RegisterController::class, 'register'])->name('auth.register');
 Route::post('login', [LoginController::class, 'login'])->name('auth.login');
+
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::get('inbox', [MailController::class, 'inbox']);
+});
