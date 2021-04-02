@@ -14,4 +14,10 @@ use Illuminate\Database\Eloquent\Model;
 class Mail extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'subject', 'message', 'id_user_from', 'id_user_to'
+    ];
+
+    public $timestamps = false;
 }
