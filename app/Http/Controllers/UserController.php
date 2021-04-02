@@ -4,7 +4,10 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Mail;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class UserController
 {
@@ -12,7 +15,8 @@ class UserController
     public function getUserIdByName($email)
     {
         try {
-            return DB::table('users')->where('email', '=', $email)->pluck('id')->toArray()[0];
+            $userId = User::where('email', $email)->first()->id;
+            return $userId;
         } catch(\Exception $e) {
             Log::error($e->getMessage());
             return response();
