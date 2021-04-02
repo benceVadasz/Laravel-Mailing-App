@@ -21,9 +21,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('register', [RegisterController::class, 'register'])->name('auth.register');
-Route::post('login', [LoginController::class, 'login'])->name('auth.login');
+Route::post('register', [RegisterController::class, 'registerAction'])->name('auth.register');
+Route::post('login', [LoginController::class, 'loginAction'])->name('auth.login');
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::get('inbox', [MailController::class, 'inbox']);
+    Route::post('compose', [MailController::class, 'composeAction']);
 });
