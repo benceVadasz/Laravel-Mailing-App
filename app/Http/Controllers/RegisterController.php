@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
-    public function register(Request $request): JsonResponse
+    public function registerAction(Request $request): JsonResponse
     {
         try{
             $validation = $request->validate([

@@ -11,7 +11,7 @@ use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
-    public function login(Request $request): JsonResponse
+    public function loginAction(Request $request): JsonResponse
     {
         $request->validate([
             'email' => 'required|email',
