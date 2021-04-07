@@ -26,4 +26,7 @@ Route::post('login', [LoginController::class, 'loginAction'])->name('auth.login'
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('compose', [MailController::class, 'composeAction']);
+    Route::get('inbox', [MailController::class, 'inboxAction']);
+    Route::get('sent', [MailController::class, 'sentAction']);
+    Route::get('getOneMail', [MailController::class, 'getOneMailAction']);
 });
