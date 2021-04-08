@@ -29,4 +29,5 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('inbox', [MailController::class, 'inboxAction']);
     Route::get('sent', [MailController::class, 'sentAction']);
     Route::get('getOneMail', [MailController::class, 'getOneMailAction']);
+    Route::get('markUnRead', [MailController::class, 'markUnReadAction']);
 });

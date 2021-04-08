@@ -73,7 +73,7 @@ class MailController extends Controller
             $mail = DB::table('mails')->where('mails.id', '=', $request->id)
                 ->join('users', 'mails.id_user_from', '=', 'users.id')
                 ->select(array('mails.id as id', 'mails.subject',
-                    'mails.message', 'mails.is_read', 'mails.sent', 'name'))
+                    'mails.message', 'mails.is_read', 'mails.sent', 'name', 'email'))
                 ->get();
             $this->markRead($request->id);
             return response()->json([
@@ -92,9 +92,9 @@ class MailController extends Controller
             ->update(['is_read' => 1]);
     }
 
-    public function markUnRead(Request $request)
+    public function markUnReadAction(Request $request)
     {
-        $id = $_GET["id"];
+        $id = $request->get('id');
         DB::table('mails')
             ->where('id', $request->id)
             ->update(['is_read' => 0]);
