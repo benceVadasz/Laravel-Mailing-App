@@ -1,7 +1,7 @@
 # Get to Know Lara
 
 This Project is the backend part of a full-stack mail service application.  
-Frontend is written in React.js, please find the link to the repository here:
+Frontend is written in React.js, please find the link to the repository here:  
 https://github.com/vadaszbence/get-to-know-lara-frontend
 
 ## Features
