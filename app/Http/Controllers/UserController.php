@@ -15,8 +15,18 @@ class UserController
     public function getUserIdByName($email)
     {
         try {
-            $userId = User::where('email', $email)->first()->id;
-            return $userId;
+            return User::where('email', $email)->first()->id;
+        } catch(\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json(['email not found'], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    public function getUserDataId($id)
+    {
+        try {
+            $userArray = User::where('id', $id)->pluck('name', 'email')->toArray();
+            return $userArray;
         } catch(\Exception $e) {
             Log::error($e->getMessage());
             return response()->json(['email not found'], Response::HTTP_BAD_REQUEST);

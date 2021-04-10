@@ -69,15 +69,23 @@ class MailController extends Controller
 
     public function getOneMailAction(Request $request): JsonResponse
     {
+        $user = new UserController;
         try {
+            $mailId = $request->get('id');
+            $receiverId = $this->getUserByMailId($mailId);
+            $receiverUserData = $user->getUserDataId($receiverId);
+            $receiverMail = key($receiverUserData);
+            $receiverName = $receiverUserData[$receiverMail];
             $mail = DB::table('mails')->where('mails.id', '=', $request->id)
                 ->join('users', 'mails.id_user_from', '=', 'users.id')
                 ->select(array('mails.id as id', 'mails.subject',
-                    'mails.message', 'mails.is_read', 'mails.sent', 'name', 'email'))
+                    'mails.message', 'mails.is_read', 'mails.sent', 'name', 'email',))
                 ->get();
             $this->markRead($request->id);
             return response()->json([
-                'mail' => $mail
+                'mail' => $mail,
+                'receiverName' => $receiverName,
+                'receiverMail' => $receiverMail,
             ], 200);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
@@ -94,9 +102,18 @@ class MailController extends Controller
 
     public function markUnReadAction(Request $request)
     {
-        $id = $request->get('id');
         DB::table('mails')
             ->where('id', $request->id)
             ->update(['is_read' => 0]);
+    }
+
+    public function getUserByMailId(int $mailId)
+    {
+        try {
+            return Mail::where('id', $mailId)->first()->id_user_to;
+        } catch(\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json(['email not found'], Response::HTTP_BAD_REQUEST);
+        }
     }
 }

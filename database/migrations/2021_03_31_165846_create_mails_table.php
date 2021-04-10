@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateMailsTable extends Migration
@@ -21,8 +22,9 @@ class CreateMailsTable extends Migration
             $table->foreign('id_user_to')->references('id')->on('users');
             $table->string('subject');
             $table->string('message');
+            $table->boolean('is_draft')->default(0);
             $table->boolean('is_read')->default(0);
-            $table->timestamp('sent')->default(date('Y-m-d H:i:s'));
+            $table->timestamp('sent')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
     }
 
